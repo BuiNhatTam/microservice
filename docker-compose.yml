@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   # === MariaDB for Product Service ===
@@ -60,7 +59,25 @@ services:
     ports:
       - "3003:3003"
     restart: unless-stopped
+ # === MariaDB for Payment Service ===
+  payment-db:
+    image: mariadb:10.5
+    container_name: payment-db
+    environment:
+      MYSQL_ROOT_PASSWORD: sapassword
+      MYSQL_DATABASE: payment_db
+    ports:
+      - "3310:3306"
+    volumes:
+      - payment_data:/var/lib/mysql
 
+  payment-service:
+    build: ./payment-service
+    depends_on:
+      - payment-db
+    ports:
+      - "3004:3004"
+    restart: unless-stopped
   # === API Gateway ===
   api-gateway:
     build: ./api-gateway
@@ -70,9 +87,11 @@ services:
       - product-service
       - order-service
       - customer-service
+      - payment-service
     restart: unless-stopped
 
 volumes:
   product_data:
   order_data:
   customer_data:
+  payment_data:
