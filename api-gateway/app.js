@@ -23,7 +23,10 @@ app.use('/payments', createProxyMiddleware({
   target: 'http://payment-service:3004',
   changeOrigin: true
 }));
-
+app.use('/inventory', createProxyMiddleware({
+  target: 'http://inventory-service:3005',
+  changeOrigin: true
+}));
 app.listen(3000, () => {
   console.log('API Gateway running on port 3000');
 });

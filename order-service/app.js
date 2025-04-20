@@ -1,3 +1,4 @@
+// order-service/src/app.js
 const express = require('express');
 const { Sequelize } = require('sequelize');
 const createOrderModel = require('./models/order');
@@ -18,6 +19,7 @@ const orderRoutes = createOrderRoutes(orderController);
 
 app.use('/orders', orderRoutes);
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {
+  console.log('Database synced (force: true)');
   app.listen(3002, () => console.log('Order Service running on port 3002'));
 });

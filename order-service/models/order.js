@@ -7,8 +7,28 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     customerName: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     totalAmount: {
@@ -28,7 +48,7 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.NOW
     }
   }, {
-    timestamps: true // Ensures Sequelize will manage createdAt and updatedAt automatically
+    timestamps: true
   });
 
   return Order;
